@@ -686,6 +686,7 @@ class dataloader_up3(Dataset):
         path_temp_stat = ''
         # print(path_temp)
 
+        # 文件路径载入
         if path_temp.__contains__('dyna'):
             path_temp_stat = path_temp.replace('dyna', 'stat')
             path_temp_mask = path_temp.replace('dyna', 'mask')
@@ -694,16 +695,19 @@ class dataloader_up3(Dataset):
             path_temp = path_temp_stat.replace('stat', 'dyna')
             path_temp_mask = path_temp_stat.replace('stat', 'mask')
 
+        # 根据文件路径，载入文件图像数据
         pic_dyna, depth = get_ele_data_from_path(path_temp)
         pic_stat, depth = get_ele_data_from_path(path_temp_stat)
         pic_mask, _ = get_ele_data_from_path(path_temp_mask)
         pic_mask = cv2.resize(pic_mask, (pic_dyna.shape[1], pic_dyna.shape[0]))
 
+        # 动态、静态、mask 三数据合并为一个
         # show_Pic([pic_dyna, pic_stat], pic_order='12', pic_str=['', ''], save_pic=False, path_save='')
         self.pic_all = np.array([pic_dyna, pic_stat, pic_mask])
 
         # pic_shape = (224, 224)
         # pic_all_New, self.RB_index = get_pic_random(self.pic_all, depth, self.RB_index, pic_shape=pic_shape)
+        # 根据输入数据形状格式 重置 数据的形状
         pic_shape = (224, 224)
         if self.pre_process:
             pic_all_New, self.RB_index = get_pic_random(self.pic_all, depth, self.RB_index, pic_shape=pic_shape)
@@ -726,16 +730,18 @@ class dataloader_up3(Dataset):
         #                                                         windows_length=self.windows_length, step=self.windows_step)
 
         mask_bottle_list = []
+        # 根据model_bottle_list里的model 使用不同参数配置来处理图像
         for i in range(len(model_bottle_list)):
             in_pic_split, mask_out = get_windows_pic_from_feature_maps_FULLY(
+                # 根据 窗长win_len_l[i], 步长win_step_l[i] 来把第layer_index_l[i]层的 特征数据all_feature_list 进行切片，方便后续处理
                 all_feature_list[layer_index_l[i]], pic_all_New[-1, :, :], windows_length=win_len_l[i], step=win_step_l[i])
             a, b, c = mask_out.shape
             x = torch.from_numpy(in_pic_split).type(torch.FloatTensor).reshape(a, -1, b, c)
 
             outputs = model_bottle_list[i](x.to(device))
             outputs = outputs.reshape(-1, b, c).cpu().detach().numpy()
+            # 把碎片的mask进行合并，整合成完整的mask
             out_mask_full = windows_chip_2_full_pic_repeated(outputs, windows_length=win_len_l[i], step=win_step_l[i], full_pic_shape=(28, 28))
-            # print(i, out_mask_full.shape, 2*out_mask_full.shape)
 
             # 如果要缩小图像，建议选择：cv2.INTER_AREA；如果要放大图像，cv2.INTER_CUBIC效果更好但是速度慢，cv2.INTER_LINEAR效果尚可且速度快。
             # cv2.INTER_NEAREST 最近邻插值                      cv2.INTER_LINEAR    双线性插值（默认）
