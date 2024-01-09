@@ -101,7 +101,8 @@ def save_checkpoint(state, filename='checkpoint.pth.tar'):
 if __name__ == "__main__":
 
     # data_path = r'D:\Data\img_seg_data_in\train\1'
-    data_path = r'D:\Data\pic_seg_choices\img_org'
+    # data_path = r'D:\Data\pic_seg_choices\img_org'
+    data_path = r'D:\Data\pic_seg_choices\DATA_NEW_ADD\img'
     Start_Epoch, Final_Epoch = 0, 1
 
 

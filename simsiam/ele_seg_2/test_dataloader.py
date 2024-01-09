@@ -1,6 +1,5 @@
 import copy
 import os
-
 import cv2
 import torch
 from simsiam.ele_seg_2.dataloader_ele_seg import dataloader_bottle, get_windows_pic_from_feature_maps_FULLY, \
@@ -201,7 +200,7 @@ import numpy as np
 
 
 
-a = dataloader_up3()
+a = dataloader_up3(path=r'D:\Data\pic_seg_choices\DATA_NEW_ADD\img')
 for i in range(a.length):
     pic_all_New, feature_in, feature_in_split, mask_org_split = a[i]
     print(pic_all_New.shape, feature_in.shape, feature_in_split.shape, mask_org_split.shape)

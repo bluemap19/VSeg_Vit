@@ -17,7 +17,8 @@ if __name__ == "__main__":
 
     # data_path = r'D:\Data\img_seg_data_in\train\1'
     # data_path = r'D:\Data\target_stage3_small_p\train\1_o_fracture'
-    data_path = r'D:\Data\img_seg_data_in\train\1'
+    # data_path = r'D:\Data\img_seg_data_in\train\1'
+    data_path = r'D:\Data\pic_seg_choices\DATA_NEW_ADD\img'
     Start_Epoch, Final_Epoch = 0, 1
 
 

@@ -808,14 +808,14 @@ class dataloader_up3(Dataset):
 
             # # show_Pic([pic_all_New[0, :, :]*256, pic_all_New[1, :, :]*256, pic_all_New[-1, :, :]*256,
             # #           out_mask_full*256, out_mask_full_up1*256, out_mask_full_up2*256], pic_order='23')
-            # name_1 = '{}_{}_up3.png'.format(index, i)
-            # cv2.imwrite(name_1, out_mask_full*256)
-            # name_2 = '{}_{}_up3_X2_1.png'.format(index, i)
-            # cv2.imwrite(name_2, out_mask_full_up1*256)
-            # name_3 = '{}_{}_up3_X2_2.png'.format(index, i)
-            # cv2.imwrite(name_3, out_mask_full_up2*256)
-            # name_4 = '{}_dyna.png'.format(index)
-            # cv2.imwrite(name_4, pic_all_New[0, :, :]*256)
+            name_1 = '{}_{}_up3.png'.format(index, i)
+            cv2.imwrite(name_1, out_mask_full*256)
+            name_2 = '{}_{}_up3_X2_1.png'.format(index, i)
+            cv2.imwrite(name_2, out_mask_full_up1*256)
+            name_3 = '{}_{}_up3_X2_2.png'.format(index, i)
+            cv2.imwrite(name_3, out_mask_full_up2*256)
+            name_4 = '{}_dyna.png'.format(index)
+            cv2.imwrite(name_4, pic_all_New[0, :, :]*256)
 
             mask_up2_list.append(np.array([out_mask_full_up1, out_mask_full_up2]))
 
